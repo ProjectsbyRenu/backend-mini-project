@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+</head>
+<body class="bg-zinc-900 text-white flex items-center justify-center h-screen">
+    <div class=" border rounded bg-pink-300 px-10 py-15 h-120 w-120 text-black" >
+        <h2 class="mb-10 text-center font-bold">USER FORM</h2>
+        <form action="/create" class="flex flex-col gap-5" >
+            <input class="border rounded-xl px-2 py-1 outline-none " type="text" placeholder="User name" name="username">
+            <input class="border rounded-xl px-2 py-1 outline-none  " type="text" placeholder="Email" name="email">
+            <input class="border rounded-xl px-2 py-1  outline-none  " type="number" placeholder="age" name="age">
+            <input class="border rounded-xl px-2 py-1 outline-none " type="text" placeholder="Password" name="password">
+            <button class="rounded-xl bg-blue-600 px-2 py-1" type="submit">sign up</button>
+        </form>
+    </div>
+</body>
+</html>
