@@ -14,7 +14,7 @@
         </div>
         <h2 class="mb-2  font-bold">Hello <%= user.username %></h2>
         <form action="/post"method="post">
-            <textarea class="resize-none block border-2 border-zinc-600 rounded w-100 h-20 p-2 outline-none" placeholder="what's in your mind? " name="content" id=""></textarea>
+            <textarea class="resize-none block border-2 border-zinc-600 rounded w-100 h-20 p-2 outline-none" required placeholder="what's in your mind? " name="content" id=""></textarea>
             <input class=" rounded py-2 text-sm w-40 px-3 mt-2 bg-blue-600 block" type="submit" value="create blog">
         </form>
         <div class="text-zinc-400 mt-5 mb-3">
@@ -25,11 +25,12 @@
         <div class="border rounded border-zinc-600 bg-zinc-700 p-3 w-100 mb-2">
                 
                 <h4 class="text-blue-600" name="name">@<%= user.username %></h4>
-                <h5  class="tracking-tight" >
+                <h5  class="tracking-tight"  >
                     <%= post.content  %></h5>
+                    <small class=""><%= post.likes.length  %> Likes</small>
             <div class="btns flex gap-4">
-                <a class="text-blue-500" href="">Like</a>
-                <a class="text-zinc-400" href="">Edit</a>
+                <a class="text-blue-500" href="/like/<%= post._id %>"><%= post.likes.indexOf(user._id)=== -1? "like" : "unlike"   %></a>
+                <a class="text-zinc-400" href="/edit/<%= post._id  %>">Edit</a>
             </div>
         
         </div>
