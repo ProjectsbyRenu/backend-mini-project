@@ -1,16 +1,17 @@
 const cookieParser = require("cookie-parser")
 const express=require("express")
 const app=express()
+const path=require("path")
 const bcrypt=require("bcrypt")
 const userModel=require("./models/user")
 const postModel=require("./models/post")
 const jwt= require("jsonwebtoken")
-const post = require("./models/post")
-const user = require("./models/user")
+const upload =require("./config/multer")
 
 app.set("view engine","ejs")
 
 app.use(express.json())
+app.use(express.static(path.join(__dirname,"public")))
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
 
@@ -19,6 +20,7 @@ app.get("/",(req,res)=>{
 })
 
 app.post("/create",async(req,res)=>{
+  // console.log(req.body)
   let {username,email,age,password}=req.body;
 
   let user= await userModel.findOne({email})
@@ -36,7 +38,7 @@ app.post("/create",async(req,res)=>{
 
   let token= jwt.sign({email:email, userid: user._id}, "shhhh")
   res.cookie("token",token)
-  res.send("user registered")
+  res.redirect("/profile")
  
     })
   })
@@ -66,6 +68,11 @@ app.get("/profile",isLoggedIn,async(req,res)=>{
   // console.log(user)
   res.render("profile",{user})
 })
+
+app.get("/profile/upload",(req,res)=>{
+  res.render("test")
+})
+
 
 app.get("/like/:id",isLoggedIn,async(req,res)=>{
   let post = await postModel.findOne({_id: req.params.id})
@@ -124,6 +131,15 @@ app.get("/logout",(req,res)=>{
  res.cookie("token", "")
   res.redirect("/login")
 })
+
+app.post("/upload", isLoggedIn,upload.single("image"),async(req,res)=>{
+ let user= await userModel.findOne({email:req.user.email})
+ user.profilepic=req.file.filename;
+ await user.save()
+ res.redirect("/profile")
+})
+
+
 app.listen(3001,()=>{
     console.log("server start")
 })
